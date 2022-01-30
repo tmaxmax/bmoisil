@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<!-- saved from url=(0035)https://www.pbinfo.ro/probleme/1629 -->
+<html lang="ro">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta
+      name="google-site-verification"
+      content="WLW8ZYDRPFs96Kh7XlFW8t6Sg_82gqYIqHQyogsheZg"
+    />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Problema qmat | www.pbinfo.ro</title>
+    <link
+      rel="shortcut icon"
+      href="https://www.pbinfo.ro/favicon.png"
+      type="image/png"
+    />
+    <meta property="og:title" content="Problema qmat" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="www.pbinfo.ro" />
+    <meta
+      property="og:url"
+      content="https://www.pbinfo.ro/probleme/1629/qmat"
+    />
+    <meta
+      property="og:image"
+      content="https://www.pbinfo.ro/css/copil-color.png"
+    />
+    <meta property="og:image:width" content="180" />
+    <meta property="og:image:height" content="170" />
+    <meta
+      property="og:description"
+      content="Se dau două seturi de N, respectiv Q matrice binare (cu valori 0 sau 1), pentru fiecare matrice fiind precizat numărul de linii respectiv de coloane. Să se afișeze numărul aparițiilor matricelor din al doilea set în primul."
+    />
+    <meta property="og:locale" content="ro_RO" />
+    <link type="text/css" rel="stylesheet" href="./1629_files/extensii.php" />
+    <link type="text/css" rel="stylesheet" href="./1629_files/normalize.css" />
+    <link type="text/css" rel="stylesheet" href="./1629_files/stil.css" />
+    <link type="text/css" rel="stylesheet" href="./1629_files/ui-custom.css" />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="./1629_files/bootstrap-ext.css"
+    />
+    <link
+      rel="stylesheet"
+      href="./1629_files/all.css"
+      integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+      crossorigin="anonymous"
+    />
+    <!-- jQuery, jQuery UI -->
+    <script id="facebook-jssdk" src="./1629_files/all.js.download"></script>
+    <script async="" src="./1629_files/analytics.js.download"></script>
+    <script src="./1629_files/jquery.min.js.download"></script>
+    <link rel="stylesheet" href="./1629_files/jquery-ui.css" />
+    <script src="./1629_files/jquery-ui.min.js.download"></script>
+
+    <script src="./1629_files/js.cookie.min.js.download"></script>
+    <!--	Bootstrap	-->
+    <link rel="stylesheet" href="./1629_files/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="./1629_files/bootstrap.min.css" />
+    <script src="./1629_files/bootstrap.min.js.download"></script>
+
+    <!-- table Sorter -->
+    <link type="text/css" rel="stylesheet" href="./1629_files/style.css" />
+    <script
+      src="./1629_files/jquery.tablesorter.js.download"
+      type="application/javascript"
+    ></script>
+
+    <script
+      src="./1629_files/scripts-pbinfo.67c09ab1c7a2db2fe7258a6d63ef24466248eb66.js.download"
+      type="application/javascript"
+    ></script>
+
+    <script src="./1629_files/knockout.js.download"></script>
+    <script>
+      DEBUG = false;
+      console.log = function () {};
+    </script>
+
+    <script type="text/x-mathjax-config;executed=true">
+      MathJax.Hub.Config({
+      	extensions: ["tex2jax.js"],
+      	jax: ["input/TeX", "output/HTML-CSS"],
+      	tex2jax: {
+      		inlineMath: [ ["\\(","\\)"] ],
+      		displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      		processEscapes: true
+      	},
+      	"HTML-CSS": {
+      			availableFonts: ["TeX"],
+      			scale: 100,
+      			styles: {
+
+      				".MathJax": {
+      				  color:"#c7254e"
+      				}
+
+      			}
+      	}
+      });
+    </script>
+    <script
+      type="text/javascript"
+      src="./1629_files/MathJax.js.download"
+    ></script>
+
+    <!-- jqplot -->
+    <!--[if lt IE 9]>
+      <script
+        language="javascript"
+        type="application/javascript"
+        src="/js/jqplot/excanvas.js?v=1"
+      ></script>
+    <![endif]-->
+    <script
+      language="javascript"
+      type="application/javascript"
+      src="./1629_files/jquery.jqplot.min.js.download"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./1629_files/jquery.jqplot.css"
+    />
+
+    <script type="text/javascript">
+      user_autentificat = {
+        id: "0",
+        este_admin: "0",
+        este_super_admin: "0",
+        este_propunator: "0",
+        este_profesor: "0",
+        este_profesor_real: "0",
+        propunator: "0",
+        este_elev: "0",
+      };
+      afisezGoogleAds = true;
+
+      setari_aplicatie = {
+        lista_judete: [
+          { id: "1", denumire: "Alba" },
+          { id: "2", denumire: "Arad" },
+          { id: "3", denumire: "Arges" },
+          { id: "4", denumire: "Bacau" },
+          { id: "5", denumire: "Bihor" },
+          { id: "6", denumire: "Bistrita Nasaud" },
+          { id: "7", denumire: "Botosani" },
+          { id: "8", denumire: "Braila" },
+          { id: "9", denumire: "Brasov" },
+          { id: "10", denumire: "Bucuresti" },
+          { id: "11", denumire: "Buzau" },
+          { id: "14", denumire: "Calarasi" },
+          { id: "13", denumire: "Caras Severin" },
+          { id: "15", denumire: "Cluj" },
+          { id: "16", denumire: "Constanta" },
+          { id: "17", denumire: "Covasna" },
+          { id: "18", denumire: "Dambovita" },
+          { id: "19", denumire: "Dolj" },
+          { id: "20", denumire: "Galati" },
+          { id: "21", denumire: "Giurgiu" },
+          { id: "22", denumire: "Gorj" },
+          { id: "23", denumire: "Harghita" },
+          { id: "24", denumire: "Hunedoara" },
+          { id: "25", denumire: "Ialomita" },
+          { id: "26", denumire: "Iasi" },
+          { id: "27", denumire: "Ilfov" },
+          { id: "28", denumire: "Maramures" },
+          { id: "29", denumire: "Mehedinti" },
+          { id: "30", denumire: "Mures" },
+          { id: "31", denumire: "Neamt" },
+          { id: "32", denumire: "Olt" },
+          { id: "33", denumire: "Prahova" },
+          { id: "44", denumire: "Republica Moldova" },
+          { id: "34", denumire: "Salaj" },
+          { id: "35", denumire: "Satu Mare" },
+          { id: "36", denumire: "Sibiu" },
+          { id: "37", denumire: "Suceava" },
+          { id: "38", denumire: "Teleorman" },
+          { id: "39", denumire: "Timis" },
+          { id: "40", denumire: "Tulcea" },
+          { id: "41", denumire: "Valcea" },
+          { id: "42", denumire: "Vaslui" },
+          { id: "43", denumire: "Vrancea" },
+        ],
+        limbaje_de_programare: [
+          { index: "toate", denumire: "Toate" },
+          { index: "cpp", denumire: "C++" },
+          { index: "c", denumire: "C" },
+          { index: "pas", denumire: "Pascal" },
+          { index: "cs", denumire: "C#" },
+          { index: "php", denumire: "PHP" },
+          { index: "py", denumire: "Python 2.7" },
+          { index: "py3", denumire: "Python 3.4" },
+          { index: "java", denumire: "Java" },
+        ],
+        nrpp: 100,
+        lungime_minima_parola: 8,
+        parola_tare: Number(0),
+        numar_schimbari_utilizator: 3,
+        nume_site: "www.pbinfo.ro",
+        force_reload: 0,
+        favicon: {
+          normal: "\/favicon.png",
+          notificari: "\/favicon-notificari.png",
+        },
+      };
+      //console.log(user_autentificat);
+    </script>
+    <style>
+      .link-favorit:hover {
+        text-decoration: none;
+      }
+      @media print {
+        a[href]:after {
+          content: none;
+        }
+      }
+
+      #zona-mijloc {
+        background-color: #fff !important;
+        min-height: 750px !important;
+      }
+    </style>
+    <link href="./1629_files/jquery.fancybox.min.css" rel="stylesheet" />
+    <script
+      type="text/javascript"
+      src="./1629_files/jquery.timepicker.js.download"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./1629_files/jquery.timepicker.css"
+    />
+    <style type="text/css">
+      .MathJax_Hover_Frame {
+        border-radius: 0.25em;
+        -webkit-border-radius: 0.25em;
+        -moz-border-radius: 0.25em;
+        -khtml-border-radius: 0.25em;
+        box-shadow: 0px 0px 15px #83a;
+        -webkit-box-shadow: 0px 0px 15px #83a;
+        -moz-box-shadow: 0px 0px 15px #83a;
+        -khtml-box-shadow: 0px 0px 15px #83a;
+        border: 1px solid #a6d !important;
+        display: inline-block;
+        position: absolute;
+      }
+      .MathJax_Menu_Button .MathJax_Hover_Arrow {
+        position: absolute;
+        cursor: pointer;
+        display: inline-block;
+        border: 2px solid #aaa;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        -khtml-border-radius: 4px;
+        font-family: "Courier New", Courier;
+        font-size: 9px;
+        color: #f0f0f0;
+      }
+      .MathJax_Menu_Button .MathJax_Hover_Arrow span {
+        display: block;
+        background-color: #aaa;
+        border: 1px solid;
+        border-radius: 3px;
+        line-height: 0;
+        padding: 4px;
+      }
+      .MathJax_Hover_Arrow:hover {
+        color: white !important;
+        border: 2px solid #ccc !important;
+      }
+      .MathJax_Hover_Arrow:hover span {
+        background-color: #ccc !important;
+      }
+    </style>
+    <style type="text/css">
+      #MathJax_About {
+        position: fixed;
+        left: 50%;
+        width: auto;
+        text-align: center;
+        border: 3px outset;
+        padding: 1em 2em;
+        background-color: #dddddd;
+        color: black;
+        cursor: default;
+        font-family: message-box;
+        font-size: 120%;
+        font-style: normal;
+        text-indent: 0;
+        text-transform: none;
+        line-height: normal;
+        letter-spacing: normal;
+        word-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        float: none;
+        z-index: 201;
+        border-radius: 15px;
+        -webkit-border-radius: 15px;
+        -moz-border-radius: 15px;
+        -khtml-border-radius: 15px;
+        box-shadow: 0px 10px 20px #808080;
+        -webkit-box-shadow: 0px 10px 20px #808080;
+        -moz-box-shadow: 0px 10px 20px #808080;
+        -khtml-box-shadow: 0px 10px 20px #808080;
+        filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true');
+      }
+      #MathJax_About.MathJax_MousePost {
+        outline: none;
+      }
+      .MathJax_Menu {
+        position: absolute;
+        background-color: white;
+        color: black;
+        width: auto;
+        padding: 2px;
+        border: 1px solid #cccccc;
+        margin: 0;
+        cursor: default;
+        font: menu;
+        text-align: left;
+        text-indent: 0;
+        text-transform: none;
+        line-height: normal;
+        letter-spacing: normal;
+        word-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        float: none;
+        z-index: 201;
+        box-shadow: 0px 10px 20px #808080;
+        -webkit-box-shadow: 0px 10px 20px #808080;
+        -moz-box-shadow: 0px 10px 20px #808080;
+        -khtml-box-shadow: 0px 10px 20px #808080;
+        filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true');
+      }
+      .MathJax_MenuItem {
+        padding: 2px 2em;
+        background: transparent;
+      }
+      .MathJax_MenuArrow {
+        position: absolute;
+        right: 0.5em;
+        padding-top: 0.25em;
+        color: #666666;
+        font-size: 0.75em;
+      }
+      .MathJax_MenuActive .MathJax_MenuArrow {
+        color: white;
+      }
+      .MathJax_MenuArrow.RTL {
+        left: 0.5em;
+        right: auto;
+      }
+      .MathJax_MenuCheck {
+        position: absolute;
+        left: 0.7em;
+      }
+      .MathJax_MenuCheck.RTL {
+        right: 0.7em;
+        left: auto;
+      }
+      .MathJax_MenuRadioCheck {
+        position: absolute;
+        left: 1em;
+      }
+      .MathJax_MenuRadioCheck.RTL {
+        right: 1em;
+        left: auto;
+      }
+      .MathJax_MenuLabel {
+        padding: 2px 2em 4px 1.33em;
+        font-style: italic;
+      }
+      .MathJax_MenuRule {
+        border-top: 1px solid #cccccc;
+        margin: 4px 1px 0px;
+      }
+      .MathJax_MenuDisabled {
+        color: GrayText;
+      }
+      .MathJax_MenuActive {
+        background-color: Highlight;
+        color: HighlightText;
+      }
+      .MathJax_MenuDisabled:focus,
+      .MathJax_MenuLabel:focus {
+        background-color: #e8e8e8;
+      }
+      .MathJax_ContextMenu:focus {
+        outline: none;
+      }
+      .MathJax_ContextMenu .MathJax_MenuItem:focus {
+        outline: none;
+      }
+      #MathJax_AboutClose {
+        top: 0.2em;
+        right: 0.2em;
+      }
+      .MathJax_Menu .MathJax_MenuClose {
+        top: -10px;
+        left: -10px;
+      }
+      .MathJax_MenuClose {
+        position: absolute;
+        cursor: pointer;
+        display: inline-block;
+        border: 2px solid #aaa;
+        border-radius: 18px;
+        -webkit-border-radius: 18px;
+        -moz-border-radius: 18px;
+        -khtml-border-radius: 18px;
+        font-family: "Courier New", Courier;
+        font-size: 24px;
+        color: #f0f0f0;
+      }
+      .MathJax_MenuClose span {
+        display: block;
+        background-color: #aaa;
+        border: 1.5px solid;
+        border-radius: 18px;
+        -webkit-border-radius: 18px;
+        -moz-border-radius: 18px;
+        -khtml-border-radius: 18px;
+        line-height: 0;
+        padding: 8px 0 6px;
+      }
+      .MathJax_MenuClose:hover {
+        color: white !important;
+        border: 2px solid #ccc !important;
+      }
+      .MathJax_MenuClose:hover span {
+        background-color: #ccc !important;
+      }
+      .MathJax_MenuClose:hover:focus {
+        outline: none;
+      }
+    </style>
+    <style type="text/css">
+      .MathJax_Preview .MJXf-math {
+        color: inherit !important;
+      }
+    </style>
+    <style type="text/css">
+      .MJX_Assistive_MathML {
+        position: absolute !important;
+        top: 0;
+        left: 0;
+        clip: rect(1px, 1px, 1px, 1px);
+        padding: 1px 0 0 0 !important;
+        border: 0 !important;
+        height: 1px !important;
+        width: 1px !important;
+        overflow: hidden !important;
+        display: block !important;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      .MJX_Assistive_MathML.MJX_Assistive_MathML_Block {
+        width: 100% !important;
+      }
+    </style>
+    <style type="text/css">
+      #MathJax_Zoom {
+        position: absolute;
+        background-color: #f0f0f0;
+        overflow: auto;
+        display: block;
+        z-index: 301;
+        padding: 0.5em;
+        border: 1px solid black;
+        margin: 0;
+        font-weight: normal;
+        font-style: normal;
+        text-align: left;
+        text-indent: 0;
+        text-transform: none;
+        line-height: normal;
+        letter-spacing: normal;
+        word-spacing: normal;
+        word-wrap: normal;
+        white-space: nowrap;
+        float: none;
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        box-sizing: content-box;
+        box-shadow: 5px 5px 15px #aaaaaa;
+        -webkit-box-shadow: 5px 5px 15px #aaaaaa;
+        -moz-box-shadow: 5px 5px 15px #aaaaaa;
+        -khtml-box-shadow: 5px 5px 15px #aaaaaa;
+        filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color='gray', Positive='true');
+      }
+      #MathJax_ZoomOverlay {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 300;
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        background-color: white;
+        opacity: 0;
+        filter: alpha(opacity=0);
+      }
+      #MathJax_ZoomFrame {
+        position: relative;
+        display: inline-block;
+        height: 0;
+        width: 0;
+      }
+      #MathJax_ZoomEventTrap {
+        position: absolute;
+        left: 0;
+        top: 0;
+        z-index: 302;
+        display: inline-block;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        background-color: white;
+        opacity: 0;
+        filter: alpha(opacity=0);
+      }
+    </style>
+    <style type="text/css">
+      .MathJax_Preview {
+        color: #888;
+      }
+      #MathJax_Message {
+        position: fixed;
+        left: 1em;
+        bottom: 1.5em;
+        background-color: #e6e6e6;
+        border: 1px solid #959595;
+        margin: 0px;
+        padding: 2px 8px;
+        z-index: 102;
+        color: black;
+        font-size: 80%;
+        width: auto;
+        white-space: nowrap;
+      }
+      #MathJax_MSIE_Frame {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0px;
+        z-index: 101;
+        border: 0px;
+        margin: 0px;
+        padding: 0px;
+      }
+      .MathJax_Error {
+        color: #cc0000;
+        font-style: italic;
+      }
+    </style>
+    <style type="text/css">
+      .MJXp-script {
+        font-size: 0.8em;
+      }
+      .MJXp-right {
+        -webkit-transform-origin: right;
+        -moz-transform-origin: right;
+        -ms-transform-origin: right;
+        -o-transform-origin: right;
+        transform-origin: right;
+      }
+      .MJXp-bold {
+        font-weight: bold;
+      }
+      .MJXp-italic {
+        font-style: italic;
+      }
+      .MJXp-scr {
+        font-family: MathJax_Script, "Times New Roman", Times, STIXGeneral,
+          serif;
+      }
+      .MJXp-frak {
+        font-family: MathJax_Fraktur, "Times New Roman", Times, STIXGeneral,
+          serif;
+      }
+      .MJXp-sf {
+        font-family: MathJax_SansSerif, "Times New Roman", Times, STIXGeneral,
+          serif;
+      }
+      .MJXp-cal {
+        font-family: MathJax_Caligraphic, "Times New Roman", Times, STIXGeneral,
+          serif;
+      }
+      .MJXp-mono {
+        font-family: MathJax_Typewriter, "Times New Roman", Times, STIXGeneral,
+          serif;
+      }
+      .MJXp-largeop {
+        font-size: 150%;
+      }
+      .MJXp-largeop.MJXp-int {
+        vertical-align: -0.2em;
+      }
+      .MJXp-math {
+        display: inline-block;
+        line-height: 1.2;
+        text-indent: 0;
+        font-family: "Times New Roman", Times, STIXGeneral, serif;
+        white-space: nowrap;
+        border-collapse: collapse;
+      }
+      .MJXp-display {
+        display: block;
+        text-align: center;
+        margin: 1em 0;
+      }
+      .MJXp-math span {
+        display: inline-block;
+      }
+      .MJXp-box {
+        display: block !important;
+        text-align: center;
+      }
+      .MJXp-box:after {
+        content: " ";
+      }
+      .MJXp-rule {
+        display: block !important;
+        margin-top: 0.1em;
+      }
+      .MJXp-char {
+        display: block !important;
+      }
+      .MJXp-mo {
+        margin: 0 0.15em;
+      }
+      .MJXp-mfrac {
+        margin: 0 0.125em;
+        vertical-align: 0.25em;
+      }
+      .MJXp-denom {
+        display: inline-table !important;
+        width: 100%;
+      }
+      .MJXp-denom > * {
+        display: table-row !important;
+      }
+      .MJXp-surd {
+        vertical-align: top;
+      }
+      .MJXp-surd > * {
+        display: block !important;
+      }
+      .MJXp-script-box > * {
+        display: table !important;
+        height: 50%;
+      }
+      .MJXp-script-box > * > * {
+        display: table-cell !important;
+        vertical-align: top;
+      }
+      .MJXp-script-box > *:last-child > * {
+        vertical-align: bottom;
+      }
+      .MJXp-script-box > * > * > * {
+        display: block !important;
+      }
+      .MJXp-mphantom {
+        visibility: hidden;
+      }
+      .MJXp-munderover {
+        display: inline-table !important;
+      }
+      .MJXp-over {
+        display: inline-block !important;
+        text-align: center;
+      }
+      .MJXp-over > * {
+        display: block !important;
+      }
+      .MJXp-munderover > * {
+        display: table-row !important;
+      }
+      .MJXp-mtable {
+        vertical-align: 0.25em;
+        margin: 0 0.125em;
+      }
+      .MJXp-mtable > * {
+        display: inline-table !important;
+        vertical-align: middle;
+      }
+      .MJXp-mtr {
+        display: table-row !important;
+      }
+      .MJXp-mtd {
+        display: table-cell !important;
+        text-align: center;
+        padding: 0.5em 0 0 0.5em;
+      }
+      .MJXp-mtr > .MJXp-mtd:first-child {
+        padding-left: 0;
+      }
+      .MJXp-mtr:first-child > .MJXp-mtd {
+        padding-top: 0;
+      }
+      .MJXp-mlabeledtr {
+        display: table-row !important;
+      }
+      .MJXp-mlabeledtr > .MJXp-mtd:first-child {
+        padding-left: 0;
+      }
+      .MJXp-mlabeledtr:first-child > .MJXp-mtd {
+        padding-top: 0;
+      }
+      .MJXp-merror {
+        background-color: #ffff88;
+        color: #cc0000;
+        border: 1px solid #cc0000;
+        padding: 1px 3px;
+        font-style: normal;
+        font-size: 90%;
+      }
+      .MJXp-scale0 {
+        -webkit-transform: scaleX(0);
+        -moz-transform: scaleX(0);
+        -ms-transform: scaleX(0);
+        -o-transform: scaleX(0);
+        transform: scaleX(0);
+      }
+      .MJXp-scale1 {
+        -webkit-transform: scaleX(0.1);
+        -moz-transform: scaleX(0.1);
+        -ms-transform: scaleX(0.1);
+        -o-transform: scaleX(0.1);
+        transform: scaleX(0.1);
+      }
+      .MJXp-scale2 {
+        -webkit-transform: scaleX(0.2);
+        -moz-transform: scaleX(0.2);
+        -ms-transform: scaleX(0.2);
+        -o-transform: scaleX(0.2);
+        transform: scaleX(0.2);
+      }
+      .MJXp-scale3 {
+        -webkit-transform: scaleX(0.3);
+        -moz-transform: scaleX(0.3);
+        -ms-transform: scaleX(0.3);
+        -o-transform: scaleX(0.3);
+        transform: scaleX(0.3);
+      }
+      .MJXp-scale4 {
+        -webkit-transform: scaleX(0.4);
+        -moz-transform: scaleX(0.4);
+        -ms-transform: scaleX(0.4);
+        -o-transform: scaleX(0.4);
+        transform: scaleX(0.4);
+      }
+      .MJXp-scale5 {
+        -webkit-transform: scaleX(0.5);
+        -moz-transform: scaleX(0.5);
+        -ms-transform: scaleX(0.5);
+        -o-transform: scaleX(0.5);
+        transform: scaleX(0.5);
+      }
+      .MJXp-scale6 {
+        -webkit-transform: scaleX(0.6);
+        -moz-transform: scaleX(0.6);
+        -ms-transform: scaleX(0.6);
+        -o-transform: scaleX(0.6);
+        transform: scaleX(0.6);
+      }
+      .MJXp-scale7 {
+        -webkit-transform: scaleX(0.7);
+        -moz-transform: scaleX(0.7);
+        -ms-transform: scaleX(0.7);
+        -o-transform: scaleX(0.7);
+        transform: scaleX(0.7);
+      }
+      .MJXp-scale8 {
+        -webkit-transform: scaleX(0.8);
+        -moz-transform: scaleX(0.8);
+        -ms-transform: scaleX(0.8);
+        -o-transform: scaleX(0.8);
+        transform: scaleX(0.8);
+      }
+      .MJXp-scale9 {
+        -webkit-transform: scaleX(0.9);
+        -moz-transform: scaleX(0.9);
+        -ms-transform: scaleX(0.9);
+        -o-transform: scaleX(0.9);
+        transform: scaleX(0.9);
+      }
+      .MathJax_PHTML .noError {
+        vertical-align: ;
+        font-size: 90%;
+        text-align: left;
+        color: black;
+        padding: 1px 3px;
+        border: 1px solid;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="MathJax_Message" style="display: none"></div>
+    <div style="position: relative">
+      <a id="pagina-index-sus"></a>
+      <a name="top"></a>
+      <nav
+        class="navbar navbar-expand-lg navbar-dark navbar-inverse navbar-fixed-top bg-light hidden-print"
+        id="bara_navigare"
+        style="border-top: solid 1px #74e371"
+      >
+        <div class="container">
+          <div class="navbar-header">
+            <button
+              type="button"
+              class="navbar-toggle collapsed"
+              data-toggle="collapse"
+              data-target="#navbar"
+              aria-expanded="false"
+              aria-controls="navbar"
+            >
+              <span class="sr-only">Comutare navigație</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://www.pbinfo.ro/">pbInfo.ro</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li>
+                <form
+                  action="https://www.pbinfo.ro/search.php"
+                  method="GET"
+                  onsubmit="return this.search_box.value!=&#39;&#39;;"
+                  class="navbar-form navbar-left"
+                  role="search"
+                  id="search_box_form"
+                >
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </span>
+                      <input
+                        type="search"
+                        name="search_box"
+                        id="search_box"
+                        class="width100 form-control ui-autocomplete-input"
+                        aria-describedby="basic-addon1"
+                        autocomplete="off"
+                      />
+                    </div>
+                  </div>
+                </form>
+              </li>
+              <li class="dropdown" id="navigare-li-probleme">
+                <a
+                  href="https://www.pbinfo.ro/probleme/1629#"
+                  class="dropdown-toggle"
+                  data-toggle="dropdown"
+                  role="button"
+                  aria-expanded="false"
+                >
+                  Probleme <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                  <li>
+                    <a href="https://www.pbinfo.ro/probleme-categorii/9"
+                      >Probleme - clasa a IX-a</a
+                    >
+                  </li>
+                  <li>
+                    <a href="https://www.pbinfo.ro/probleme-categorii/10"
+                      >Probleme - clasa a X-a</a
+                    >
+                  </li>
+                  <li>
+                    <a href="https://www.pbinfo.ro/probleme-categorii/11"
+                      >Probleme - clasa a XI-a</a
+                    >
+                  </li>
+                  <li>
+                    <a href="https://www.pbinfo.ro/?pagina=concursuri-lista"
+                      >Probleme din concursuri</a
+                    >
+                  </li>
+                  <li class="divider"></li>
+                  <li>
+                    <a
+                      href="https://www.pbinfo.ro/probleme/1629#cautare%20problema"
+                      class="link-cautare-problema"
+                    >
+                      <i class="fas fa-search"></i>
+                      Căutare problemă
+                    </a>
+                  </li>
+                  <li class="divider"></li>
+                  <li>
+                    <a href="https://www.pbinfo.ro/?pagina=itemi-evaluare-lista"
+                      >Exerciții</a
+                    >
+                  </li>
+                  <li class="divider"></li>
+                  <li>
+                    <a href="https://www.pbinfo.ro/blockly"
+                      >Programează cu Blockly</a
+                    >
+                  </li>
+                  <li>
+                    <a href="https://www.pbinfo.ro/?pagina=processing"
+                      >Desenează cu Processing</a
+                    >
+                  </li>
+                  <li>
+                    <a href="https://www.pbinfo.ro/?pagina=sql"
+                      >Exersează SQL</a
+                    >
+                  </li>
+                </ul>
+              </li>
+              <li id="navigare-li-solutii">
+                <a href="https://www.pbinfo.ro/solutii">Soluţii</a>
+              </li>
+              <li class="dropdown" id="navigare-li-resurse">
+                <a
+                  href="https://www.pbinfo.ro/probleme/1629#"
+                  class="dropdown-toggle"
+                  data-toggle="dropdown"
+                  role="button"
+                  aria-expanded="false"
+                >
+                  Resurse <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                  <li>
+                    <a
+                      href="https://www.pbinfo.ro/articole/5547/informatica-clasa-a-ix-a"
+                      >Resurse pentru clasa a IX-a</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="https://www.pbinfo.ro/articole/5548/informatica-clasa-a-x-a"
+                      >Resurse pentru clasa a X-a</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="https://www.pbinfo.ro/articole/5549/informatica-clasa-a-xi-a"
+                      >Resurse pentru clasa a XI-a</a
+                    >
+                  </li>
+                  <li class="divider"></li>
+                  <li>
+                    <a
+                      href="https://www.pbinfo.ro/articole/16/subiecte-de-la-examene"
+                      >Subiecte bacalaureat</a
+                    >
+                  </li>
+                  <li class="divider"></li>
+                  <li>
+                    <a href="https://www.pbinfo.ro/ajutor">Ajutor</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li>
+                <a
+                  href="https://www.pbinfo.ro/probleme/1629#"
+                  data-toggle="modal"
+                  data-target="#modal_login"
+                >
+                  <i class="fas fa-sign-in-alt"></i>
+                  Autentificare
+                </a>
+              </li>
+              <li>
+                <a href="https://www.pbinfo.ro/?pagina=creare-cont">
+                  <i class="fas fa-user"></i>
+                  Înregistrare
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div class="modal fade" id="modal_login" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <form
+              action="https://www.pbinfo.ro/login.php"
+              method="post"
+              id="form-login-modal"
+            >
+              <input
+                type="hidden"
+                name="local_ip"
+                id="local_ip_header"
+                value="01741417-6d52-41c4-920a-8948b4c08602.local"
+              />
+              <div class="modal-header">
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="modal_login_label">
+                  Autentificare
+                </h4>
+              </div>
+              <div class="modal-body">
+                <input
+                  type="hidden"
+                  name="form_token"
+                  value="9cfddefbb9f2b5283764930e8bfd80e8077384a8"
+                />
+                <input type="hidden" name="GET_pagina" value="probleme" />
+                <input type="hidden" name="GET_id" value="1629" />
+                <div class="form-group">
+                  <label for="user_login" class="control-label"
+                    >Utilizator sau email</label
+                  >
+                  <div>
+                    <input
+                      type="text"
+                      name="user"
+                      id="user_login"
+                      class="form-control"
+                    />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="parola_login" class="control-label">Parola</label>
+                  <div class="">
+                    <input
+                      type="password"
+                      name="parola"
+                      id="parola_login"
+                      class="form-control"
+                    />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="form-login-raspuns"></div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <div class="form-group">
+                  <div class="right">
+                    <button
+                      type="button"
+                      class="btn btn-default"
+                      data-dismiss="modal"
+                    >
+                      Închidere
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                      Autentificare
+                    </button>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-6 center">
+                    <a href="https://www.pbinfo.ro/?pagina=creare-cont">
+                      <i class="fas fa-user"></i> Creare cont nou
+                    </a>
+                  </div>
+                  <div class="col-sm-6 center">
+                    <a href="https://www.pbinfo.ro/?pagina=recuperare-parola">
+                      <i class="fas fa-lock-open"></i>
+                      Recuperare parolă
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div
+        class="modal fade"
+        id="modalCautareProblema"
+        tabindex="-1"
+        role="dialog"
+      ></div>
+      <!-- /.modal -->
+      <div
+        class="modal fade"
+        id="modalDialogPrincipal"
+        tabindex="-1"
+        role="dialog"
+      ></div>
+      <!-- continutul se incarca asincron -->
+
+      <div id="zona-mijloc">
+        <div class="container">
+          <div
+            id="div-afisare-mesaj-global"
+            style="
+              z-index: 255;
+              padding: 10px;
+              border: solid 1px gray;
+              width: 400px;
+              position: fixed;
+              top: 65px;
+              left: 50%;
+              transform: translateX(-50%);
+              display: none;
+              margin: auto;
+              text-align: center;
+            "
+          >
+            <button
+              type="button"
+              class="close"
+              aria-label="Close"
+              onclick="$(&#39;#div-afisare-mesaj-global&#39;).hide().fadeOut(&#39;slow&#39;)"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+            <div class="continut-mesaj" style="line-height: 16pt"></div>
+          </div>
+          <div id="div-continut-pagina"></div>
+          <div class="separator"></div>
+          <a name="section-restrictii"></a>
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <th>Postată de</th>
+                <th>Clasa</th>
+                <th>Intrare/ieșire</th>
+                <th>Limită timp</th>
+                <th>Limită memorie</th>
+                <th>Sursa problemei</th>
+                <th>Autor</th>
+                <th>Dificultate</th>
+              </tr>
+              <tr>
+                <td>
+                  <span class="pbi-widget-user pbi-widget-user-span">
+                    <a href="https://www.pbinfo.ro/profil/PopaBogdan">
+                      <img
+                        src="./1629_files/4798924eac4777e7f62c49aa7e327af8.jpeg"
+                        style="border-radius: 3px; vertical-align: middle"
+                      />
+                      Popa Bogdan Ioan (PopaBogdan)
+                    </a>
+                  </span>
+                </td>
+                <td class="center">9</td>
+                <td>
+                  <span
+                    style="
+                      background: url(&#39;/img/32-fisier.png&#39;) no-repeat
+                        3px center;
+                      background-size: 16px;
+                      padding-left: 34px;
+                    "
+                  >
+                    qmat.in / qmat.out
+                  </span>
+                </td>
+                <td>0.1 secunde</td>
+                <td>
+                  <span title="Memorie totală">1 MB</span> /
+                  <span title="Dimensiunea stivei">1 MB</span>
+                </td>
+                <td>
+                  <div class="center">-</div>
+                </td>
+                <td>Bogdan Popa</td>
+                <td class="center">dificilă</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="">
+            <h1 class="text-primary">
+              <span class="label label-primary">#1629</span>
+              <a href="https://www.pbinfo.ro/probleme/1629/qmat"> qmat </a>
+            </h1>
+          </div>
+          <div class="separator"></div>
+          <div class="box row padding5">
+            <div class="col-lg-9 col-md-9">
+              <ol class="breadcrumb">
+                <li>
+                  <a
+                    href="https://www.pbinfo.ro/?pagina=probleme-lista&amp;clasa=9"
+                  >
+                    Clasa a 9-a
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.pbinfo.ro/?pagina=probleme-lista&amp;tag=46"
+                  >
+                    Tablouri bidimensionale (matrice)
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.pbinfo.ro/?pagina=probleme-lista&amp;tag=58"
+                  >
+                    Probleme diverse
+                  </a>
+                </li>
+                <li class="active">qmat</li>
+              </ol>
+              <div class="padding10">
+                Etichete:
+                <span id="container-etichete">
+                  <span class="text-muted">nicio etichetă</span>
+                </span>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 text-right">
+              <div class="separator"></div>
+              <div class="separator">
+                <div
+                  class="fb-like"
+                  data-href="http://www.pbinfo.ro/probleme/1629/qmat"
+                  data-layout="button_count"
+                  data-action="like"
+                  data-show-faces="false"
+                  data-share="true"
+                ></div>
+              </div>
+              <div class="separator">
+                <!-- Place this tag where you want the +1 button to render. -->
+                <div class="g-plusone" style=""></div>
+              </div>
+            </div>
+          </div>
+          <div class="separator"></div>
+          <div class="separator"></div>
+          <div class="separator"></div>
+          <div class="">
+            <div class="">
+              <div class="row"></div>
+              <div class="separator"></div>
+              <div class="separator"></div>
+              <div class="separator"></div>
+              <div class="separator"></div>
+              <script>
+                $(document).ready(function () {
+                  function ResetWrapper() {
+                    $("#problema-wrapper").html(
+                      '<div class="text-center padding10"><img src="/img/loading3.gif"></div>'
+                    );
+                  }
+
+                  $("#meniu-problema-enunt a").click(function (event) {
+                    ResetWrapper();
+                    var id = $(event.target).data("id");
+                    $("#problema-wrapper").load(
+                      "/ajx-module/ajx-problema-afisare-enunt.php?id=" + id,
+                      {},
+                      function () {
+                        MathJax.Hub.Queue([
+                          "Typeset",
+                          MathJax.Hub,
+                          document.getElementById("problema-wrapper"),
+                        ]);
+                        ColorareSintaxa();
+                        $("#problema-wrapper pre").attr(
+                          "contenteditable",
+                          true
+                        );
+                        $("#problema-wrapper pre").attr("editable", true);
+                      }
+                    );
+                    window.history.pushState(
+                      {},
+                      "",
+                      $(event.target).attr("href")
+                    );
+                    $("#meniu-problema-enunt").removeClass("active");
+                    $("#meniu-problema-indicatii_de_rezolvare").removeClass(
+                      "active"
+                    );
+                    $("#meniu-problema-teste").removeClass("active");
+                    $("#meniu-problema-clasa").removeClass("active");
+                    $("#meniu-problema-clasa ul li").removeClass("active");
+
+                    $("#meniu-problema-enunt").addClass("active");
+
+                    return false;
+                  });
+
+                  $("#meniu-problema-indicatii_de_rezolvare a").click(function (
+                    event
+                  ) {
+                    ResetWrapper();
+                    var id = $(event.target).data("id");
+                    $("#problema-wrapper").load(
+                      "/ajx-module/ajx-problema-afisare-solutie.php?id=" + id,
+                      {},
+                      function () {
+                        MathJax.Hub.Queue([
+                          "Typeset",
+                          MathJax.Hub,
+                          document.getElementById("problema-wrapper"),
+                        ]);
+                        ColorareSintaxa();
+                        $("#problema-wrapper pre").attr(
+                          "contenteditable",
+                          true
+                        );
+                        $("#problema-wrapper pre").attr("editable", true);
+                      }
+                    );
+                    window.history.pushState(
+                      {},
+                      "",
+                      $(event.target).attr("href")
+                    );
+                    $("#meniu-problema-enunt").removeClass("active");
+                    $("#meniu-problema-indicatii_de_rezolvare").removeClass(
+                      "active"
+                    );
+                    $("#meniu-problema-teste").removeClass("active");
+                    $("#meniu-problema-clasa").removeClass("active");
+                    $("#meniu-problema-clasa ul li").removeClass("active");
+
+                    $("#meniu-problema-indicatii_de_rezolvare").addClass(
+                      "active"
+                    );
+
+                    return false;
+                  });
+
+                  $("#meniu-problema-teste a").click(function (event) {
+                    ResetWrapper();
+                    var id = $(event.target).data("id");
+                    $("#problema-wrapper").load(
+                      "/ajx-module/ajx-problema-afisare-teste.php?id=" + id
+                    );
+                    window.history.pushState(
+                      {},
+                      "",
+                      $(event.target).attr("href")
+                    );
+                    $("#meniu-problema-enunt").removeClass("active");
+                    $("#meniu-problema-indicatii_de_rezolvare").removeClass(
+                      "active"
+                    );
+                    $("#meniu-problema-teste").removeClass("active");
+                    $("#meniu-problema-clasa").removeClass("active");
+                    $("#meniu-problema-clasa ul li").removeClass("active");
+
+                    $("#meniu-problema-teste").addClass("active");
+                    return false;
+                  });
+
+                  $("#meniu-problema-clasa ul li a").click(function (event) {
+                    ResetWrapper();
+                    var id = $(event.target).data("id");
+                    var id_clasa = $(event.target).data("id_clasa");
+                    $("#problema-wrapper").load(
+                      "/ajx-module/ajx-problema-afisare-clasa.php?id=" +
+                        id +
+                        "&id_clasa=" +
+                        id_clasa
+                    );
+                    window.history.pushState(
+                      {},
+                      "",
+                      $(event.target).attr("href")
+                    );
+                    $("#meniu-problema-enunt").removeClass("active");
+                    $("#meniu-problema-indicatii_de_rezolvare").removeClass(
+                      "active"
+                    );
+                    $("#meniu-problema-teste").removeClass("active");
+                    $("#meniu-problema-clasa").removeClass("active");
+                    $("#meniu-problema-clasa ul li").removeClass("active");
+                    $(event.target).parent().addClass("active");
+                    $("#meniu-problema-clasa").addClass("active");
+                    $("#meniu-problema-clasa").removeClass("open");
+                    return false;
+                  });
+                });
+              </script>
+
+              <div class="separator"></div>
+              <div class="separator"></div>
+              <div class="separator"></div>
+
+              <ul class="nav nav-tabs">
+                <li id="meniu-problema-enunt" class="active">
+                  <a
+                    href="https://www.pbinfo.ro/probleme/1629/qmat"
+                    title="Vezi enunțul problemei"
+                    data-id="1629"
+                  >
+                    Enunț
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.pbinfo.ro/solutii/problema/1629/qmat">
+                    Vezi soluții <span class="badge">2014</span>
+                  </a>
+                </li>
+              </ul>
+              <div class="nav-content">
+                <div class="separator"></div>
+                <div id="problema-wrapper">
+                  <article class="" id="enunt">
+                    <div class="float-right" style="margin: 10px">
+                      <script async="" src="./1629_files/f.txt"></script>
+                      <!-- banner-pentru-mobil -->
+                      <ins
+                        class="adsbygoogle"
+                        style="
+                          display: inline-block;
+                          width: 336px;
+                          height: 280px;
+                        "
+                        data-ad-client="ca-pub-7152921241438800"
+                        data-ad-slot="5351329617"
+                      ></ins>
+                      <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                      </script>
+                    </div>
+                    <h1>Enunț</h1>
+
+                    <p>
+                      Spunem că două matrice <code>a</code> și
+                      <code>b</code> sunt egale dacă au același număr de linii
+                      <code>n</code> și același număr de coloane
+                      <code>m</code> și pentru orice pereche de indici
+                      <code>i</code>, <code>j</code> (<code
+                        >1 ≤ i ≤ n, 1 ≤ j ≤ m</code
+                      >) <code>a[i][j] = b[i][j]</code>.
+                    </p>
+
+                    <h1>Cerința</h1>
+
+                    <p>
+                      Se dau două seturi de <code>N</code>, respectiv
+                      <code>Q</code> matrice binare (cu valori
+                      <code>0</code> sau <code>1</code>), pentru fiecare matrice
+                      fiind precizat numărul de linii respectiv de coloane. Să
+                      se afișeze numărul aparițiilor matricelor din al doilea
+                      set în primul.
+                    </p>
+
+                    <h1>Date de intrare</h1>
+
+                    <p>
+                      Fișierul de intrare <code>qmat.in</code> conține pe prima
+                      linie numărul <code>N</code>, urmat de
+                      <code>N</code> matrice, <code>M1</code>, <code>M2</code>,
+                      … <code>Mn</code>. Pentru fiecare matrice
+                      <code>Mi</code> este precizat, pe o linie, separate
+                      printr-un spațiu, numărul de linii <code>li</code>,
+                      respectiv de coloane <code>ci</code>, iar pe următoarele
+                      <code>li</code> linii câte <code>ci</code> cifre binare
+                      separate prin câte un spațiu. După cele
+                      <code>N</code> matrice se află și numărul
+                      <code>Q</code> urmat de asemenea de <code>Q</code> matrice
+                      descrise la fel ca și cele anterioare.
+                    </p>
+
+                    <h1>Date de ieșire</h1>
+
+                    <p>
+                      Fișierul de ieșire <code>qmat.out</code> va conține pe
+                      prima linie numărul <code>sol</code>, reprezentând numărul
+                      de matrice din al doilea set ce apar în primul.
+                    </p>
+
+                    <h1>Restricții și precizări</h1>
+
+                    <ul>
+                      <li><code>1 ≤ n,q ≤ 10000</code></li>
+                      <li>
+                        pentru orice matrice dată <code>1 ≤</code> nr. de linii,
+                        nr. de coloane <code>≤ 10</code>
+                      </li>
+                    </ul>
+
+                    <br />
+                    <script async="" src="./1629_files/f.txt"></script>
+                    <!-- link-unit -->
+                    <ins
+                      class="adsbygoogle"
+                      style="display: inline-block; width: 728px; height: 15px"
+                      data-ad-client="ca-pub-7152921241438800"
+                      data-ad-slot="6421896419"
+                    ></ins>
+                    <script>
+                      (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                    <h1>Exemplu</h1>
+
+                    <p><code>qmat.in</code></p>
+
+                    <pre contenteditable="true" editable="true">
+5
+2 6
+0 0 0 1 1 1
+1 0 1 1 0 0
+7 4
+0 0 0 1
+0 0 0 0
+0 1 1 0
+0 1 1 0
+1 1 1 1
+0 1 0 0
+0 1 0 1
+5 1
+0
+0
+1
+0
+1
+3 5
+0 1 1 1 1
+1 1 1 0 0
+0 0 1 1 0
+9 2
+0 1
+1 1
+1 1
+1 0
+1 1
+0 1
+0 1
+0 0
+1 1
+3
+3 5
+0 1 1 1 1
+1 1 1 0 0
+0 0 1 1 0
+9 2
+0 1
+1 1
+1 1
+1 0
+1 1
+0 1
+0 1
+0 0
+1 1
+2 3
+1 1 1
+1 1 1</pre
+                    >
+
+                    <p><code>qmat.out</code></p>
+
+                    <pre contenteditable="true" editable="true">2</pre>
+                  </article>
+                  <div
+                    style="margin: 20px 0; text-align: center; padding: 10px"
+                    class="rezumat"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="separator"></div>
+        </div>
+      </div>
+
+      <a
+        href="https://www.pbinfo.ro/probleme/1629#pagina-index-sus"
+        style="position: fixed; bottom: 60px; right: 20px; font-size: 3em"
+        title="Du-te la începutul paginii"
+        class="hidden-xs hidden-sm hidden-print btn-go-top"
+      >
+        <i class="fas fa-arrow-alt-circle-up"></i>
+      </a>
+      <div class="hidden-lg hidden-md hidden-print">
+        <br /><br />
+        <a
+          href="https://www.pbinfo.ro/probleme/1629#pagina-index-sus"
+          title="Du-te la începutul paginii"
+          class="btn btn-default btn-block btn-go-top"
+        >
+          <i class="fas fa-arrow-alt-circle-up"></i>
+          Du-te sus!
+        </a>
+        <br /><br />
+      </div>
+      <div
+        id="footer"
+        style="border-top: solid 2px #74e371"
+        class="hidden-print"
+      >
+        <div class="container">
+          <div class="center">
+            <ul></ul>
+            <ul>
+              <li class="inline">
+                <a
+                  href="https://www.pbinfo.ro/?pagina=contact-form"
+                  class="label label-danger"
+                >
+                  <i class="far fa-envelope"></i>
+                  Contact
+                </a>
+              </li>
+              <li class="inline text-muted">•</li>
+              <li class="inline">
+                <a
+                  href="https://www.pbinfo.ro/probleme/1629#reload"
+                  style="margin-right: 5px"
+                  title="Reîncarcă pagina"
+                  class="label label-danger btn-force-reload"
+                >
+                  <i class="fas fa-sync-alt"></i>
+                  Reîncarcă
+                </a>
+              </li>
+              <li class="inline text-muted">•</li>
+              <li class="inline">
+                <span class="label label-default" title="Adresa ta IP">
+                  79.114.125.246
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./1629_files/ads.js.download" type="text/javascript"></script>
+    <div id="qwerIKh376VBFlmncv4298" style="display: none"></div>
+    <a name="pagina-index-jos"></a>
+    <script src="./1629_files/codemirror.js.download"></script>
+    <script src="./1629_files/runmode.js.download"></script>
+    <script src="./1629_files/colorize.js.download"></script>
+    <link rel="stylesheet" href="./1629_files/codemirror.css" />
+    <link rel="stylesheet" href="./1629_files/elegant.css" />
+    <link rel="stylesheet" href="./1629_files/custom.css" />
+    <script src="./1629_files/clike.js.download"></script>
+    <script src="./1629_files/pascal.js.download"></script>
+    <script src="./1629_files/pseudocod.js.download"></script>
+    <script src="./1629_files/php.js.download"></script>
+    <script src="./1629_files/python.js.download"></script>
+    <script src="./1629_files/sql.js.download"></script>
+    <script src="./1629_files/xml.js.download"></script>
+    <script src="./1629_files/css.js.download"></script>
+    <script src="./1629_files/javascript.js.download"></script>
+    <script src="./1629_files/htmlmixed.js.download"></script>
+    <script src="./1629_files/jquery.countdown.min.js.download"></script>
+    <script src="./1629_files/jquery.fancybox.min.js.download"></script>
+    <script src="./1629_files/index.e1af23f6.js.download"></script>
+
+    <!-- 2 queries, 0.00973  secunde -->
+    <ul
+      class="ui-autocomplete ui-front ui-menu ui-widget ui-widget-content"
+      id="ui-id-1"
+      tabindex="0"
+      style="display: none"
+    ></ul>
+    <span
+      role="status"
+      aria-live="assertive"
+      aria-relevant="additions"
+      class="ui-helper-hidden-accessible"
+    ></span>
+  </body>
+</html>
