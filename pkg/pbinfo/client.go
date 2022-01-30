@@ -52,7 +52,9 @@ func (c *Client) getCollector(ctx context.Context) *colly.Collector {
 		col.AllowedDomains = []string{domain, "www." + domain}
 		col.CacheDir = c.CollectorCacheDir
 		col.AllowURLRevisit = true
+		if c.CollectorDebugger != nil {
 		col.SetDebugger(c.CollectorDebugger)
+		}
 		col.WithTransport(c.RoundTripper)
 		col.SetRequestTimeout(c.Timeout)
 		extensions.RandomUserAgent(col)
