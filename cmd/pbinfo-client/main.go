@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"flag"
@@ -16,9 +17,11 @@ import (
 func main() {
 	var id int
 	var showTestCases bool
+	var sizeLimit int
 
 	flag.IntVar(&id, "id", 0, "The ID of the PbInfo problem to retrieve")
 	flag.BoolVar(&showTestCases, "show-test-cases", false, "Whether to output the test cases or not")
+	flag.IntVar(&sizeLimit, "size-limit", 1e3, "The maximum test case content size to show")
 	flag.Parse()
 
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
@@ -60,6 +63,20 @@ func main() {
 		if t.Score != 0 {
 			fmt.Printf("Score: %d\n", t.Score)
 		}
-		fmt.Printf("Input: %s\nOutput: %s\n", string(t.Input), string(t.Output))
+
+		input := normalizeTestCaseContent(t.Input, sizeLimit)
+		output := normalizeTestCaseContent(t.Output, sizeLimit)
+
+		fmt.Printf("Input: %s\nOutput: %s\n", input, output)
 	}
+}
+
+func normalizeTestCaseContent(c []byte, sizeLimit int) string {
+	if len(c) <= sizeLimit {
+		return string(c)
+	}
+
+	i := bytes.LastIndexByte(c[:sizeLimit], ' ')
+
+	return string(c[:i]) + "... [truncated]"
 }
