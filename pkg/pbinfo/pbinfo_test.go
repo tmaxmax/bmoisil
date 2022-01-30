@@ -44,10 +44,9 @@ func (h handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	switch {
-	case r.URL.Path == "/ajx-module/ajx-problema-afisare-teste":
+	case r.URL.Path == "/ajx-module/ajx-problema-afisare-teste.php":
 		h.getTestCases(w, r)
 	case r.URL.Path == "/php/descarca-test.php":
-		h.tb.Logf("new request: %s", r.URL)
 		h.downloadTest(w, r)
 	case strings.HasPrefix(r.URL.Path, "/probleme"):
 		h.getProblem(w, r)

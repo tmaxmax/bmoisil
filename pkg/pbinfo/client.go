@@ -160,7 +160,7 @@ func (c *Client) getProblemFullTestCases(ctx context.Context, problemID int) ([]
 		})
 	})
 
-	if err := col.Visit(fmt.Sprintf("%s/ajx-problema-afisare-teste?id=%d", ajaxEndpoint, problemID)); err != nil {
+	if err := col.Visit(fmt.Sprintf("%s/ajx-problema-afisare-teste.php?id=%d", ajaxEndpoint, problemID)); err != nil {
 		return nil, fmt.Errorf("failed to retrieve test cases for problem with ID %d: %w", problemID, err)
 	}
 
