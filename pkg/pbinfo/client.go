@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"strconv"
 	"strings"
@@ -53,7 +52,7 @@ func (c *Client) getCollector(ctx context.Context) *colly.Collector {
 		col.CacheDir = c.CollectorCacheDir
 		col.AllowURLRevisit = true
 		if c.CollectorDebugger != nil {
-		col.SetDebugger(c.CollectorDebugger)
+			col.SetDebugger(c.CollectorDebugger)
 		}
 		col.WithTransport(c.RoundTripper)
 		col.SetRequestTimeout(c.Timeout)
@@ -175,8 +174,8 @@ func (c *Client) getProblemFullTestCases(ctx context.Context, problemID int) ([]
 		i := i
 
 		g.Go(func() error {
-			log.Println(urls[i].href)
-			req, err := http.NewRequestWithContext(gctx, http.MethodGet, urls[i].href, nil)
+			url := fmt.Sprintf("%s%s", baseEndpoint, urls[i].href)
+			req, err := http.NewRequestWithContext(gctx, http.MethodGet, url, nil)
 			if err != nil {
 				return err
 			}
