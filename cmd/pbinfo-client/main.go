@@ -31,7 +31,7 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	var testCases []pbinfo.ProblemTestCase
+	var testCases []pbinfo.TestCase
 	if showTestCases {
 		testCases, err = client.GetProblemTestCases(ctx, id)
 		if err != nil {
@@ -60,6 +60,6 @@ func main() {
 		if t.Score != 0 {
 			fmt.Printf("Score: %d\n", t.Score)
 		}
-		fmt.Printf("Input: %s\nOutput: %s\n", string(t.Input), string(t.Expected))
+		fmt.Printf("Input: %s\nOutput: %s\n", string(t.Input), string(t.Output))
 	}
 }

@@ -107,7 +107,7 @@ func (c *Client) FindProblemByID(ctx context.Context, id int) (*Problem, error) 
 // It firstly tries to retrieve all the test cases, if they are available, otherwise it retrieves
 // only the example test cases.
 // It returns an error if the problem does not exist, a network error occurs etc.
-func (c *Client) GetProblemTestCases(ctx context.Context, problemID int) ([]ProblemTestCase, error) {
+func (c *Client) GetProblemTestCases(ctx context.Context, problemID int) ([]TestCase, error) {
 	cases, err := c.getProblemFullTestCases(ctx, problemID)
 	if err != nil {
 		return nil, err
@@ -119,7 +119,7 @@ func (c *Client) GetProblemTestCases(ctx context.Context, problemID int) ([]Prob
 	return c.getProblemExampleTestCases(ctx, problemID)
 }
 
-func (c *Client) getProblemFullTestCases(ctx context.Context, problemID int) ([]ProblemTestCase, error) {
+func (c *Client) getProblemFullTestCases(ctx context.Context, problemID int) ([]TestCase, error) {
 	col := c.getCollector(ctx)
 
 	type url struct {
@@ -129,12 +129,12 @@ func (c *Client) getProblemFullTestCases(ctx context.Context, problemID int) ([]
 	}
 
 	var (
-		testCases []ProblemTestCase
+		testCases []TestCase
 		urls      []url
 	)
 
 	col.OnHTML(`table > tbody > tr`, func(h *colly.HTMLElement) {
-		testCases = append(testCases, ProblemTestCase{})
+		testCases = append(testCases, TestCase{})
 		index := len(testCases) - 1
 		t := &testCases[index]
 
@@ -149,7 +149,7 @@ func (c *Client) getProblemFullTestCases(ctx context.Context, problemID int) ([]
 				} else if i == 2 {
 					t.Input = []byte(content)
 				} else {
-					t.Expected = []byte(content)
+					t.Output = []byte(content)
 				}
 			case 4:
 				if normalizeText(h.Text) == "da" {
@@ -202,7 +202,7 @@ func (c *Client) getProblemFullTestCases(ctx context.Context, problemID int) ([]
 			if urls[i].input {
 				testCases[urls[i].index].Input = data
 			} else {
-				testCases[urls[i].index].Expected = data
+				testCases[urls[i].index].Output = data
 			}
 
 			return nil
@@ -214,7 +214,7 @@ func (c *Client) getProblemFullTestCases(ctx context.Context, problemID int) ([]
 	}
 
 	for _, c := range testCases {
-		if c.Input == nil || c.Expected == nil {
+		if c.Input == nil || c.Output == nil {
 			return nil, nil
 		}
 	}
@@ -222,7 +222,7 @@ func (c *Client) getProblemFullTestCases(ctx context.Context, problemID int) ([]
 	return testCases, nil
 }
 
-func (c *Client) getProblemExampleTestCases(ctx context.Context, problemID int) ([]ProblemTestCase, error) {
+func (c *Client) getProblemExampleTestCases(ctx context.Context, problemID int) ([]TestCase, error) {
 	col := c.getCollector(ctx)
 
 	var examplesContent []string
@@ -239,11 +239,11 @@ func (c *Client) getProblemExampleTestCases(ctx context.Context, problemID int) 
 		return nil, fmt.Errorf("failed to retrieve examples for problem with ID %d: incomplete data (%d content chunks instead of even number)", problemID, len(examplesContent))
 	}
 
-	testCases := make([]ProblemTestCase, len(examplesContent)/2)
+	testCases := make([]TestCase, len(examplesContent)/2)
 	for i := range testCases {
 		t := &testCases[i]
 		t.Input = []byte(examplesContent[2*i])
-		t.Expected = []byte(examplesContent[2*i+1])
+		t.Output = []byte(examplesContent[2*i+1])
 		t.IsExample = true
 	}
 

@@ -102,10 +102,10 @@ func (p *Problem) ReadableMaxStack() string {
 	return units.HumanSize(float64(p.MaxStackBytes))
 }
 
-// ProblemTestCase holds the input and the expected output for a single test case.
-type ProblemTestCase struct {
+// TestCase holds the input and the expected output for a single test case of a problem.
+type TestCase struct {
 	Input     []byte
-	Expected  []byte
+	Output    []byte
 	IsExample bool
 	Score     int
 }
