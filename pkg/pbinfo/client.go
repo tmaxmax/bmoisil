@@ -109,6 +109,7 @@ func (c *Client) FindProblemByID(ctx context.Context, id int) (*Problem, error) 
 // It returns an error if the problem does not exist, a network error occurs etc.
 func (c *Client) GetProblemTestCases(ctx context.Context, problemID int) ([]TestCase, error) {
 	cases, err := c.getProblemFullTestCases(ctx, problemID)
+	// If an error is returned, getProblemExampleTestCases will probably fail too (e.g. network error).
 	if err != nil {
 		return nil, err
 	}
@@ -116,6 +117,7 @@ func (c *Client) GetProblemTestCases(ctx context.Context, problemID int) ([]Test
 		return cases, nil
 	}
 
+	// Try to retrieve examples if no test cases were found.
 	return c.getProblemExampleTestCases(ctx, problemID)
 }
 
@@ -164,6 +166,8 @@ func (c *Client) getProblemFullTestCases(ctx context.Context, problemID int) ([]
 	}
 
 	if len(testCases) == 0 {
+		// No test cases found here, return both the slice and the error as nil
+		// so GetProblemTestCases knows to call getProblemExampleTestCases.
 		return nil, nil
 	}
 
