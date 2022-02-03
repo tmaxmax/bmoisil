@@ -57,6 +57,21 @@ func (f Flags) GetAll(flag string) []string {
 	return f[normalizeFlagName(flag)]
 }
 
+// Merge merges this set of flags with the provided one. Values in the other set override
+// the current one's.
+func (f Flags) Merge(others Flags) {
+	for key, value := range others {
+		f[key] = value
+	}
+}
+
+// Range loops through each set flag.
+func (f Flags) Range(fn func(flag string, values []string, isToggle bool)) {
+	for key, value := range f {
+		fn(key, value, len(value) == 0)
+	}
+}
+
 func normalizeFlagName(name string) string {
 	if len(name) == 0 {
 		panic("toolchain: empty flag name")
