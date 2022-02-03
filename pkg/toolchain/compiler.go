@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"os/exec"
 	"strings"
 	"sync"
 )
@@ -110,7 +109,7 @@ func NewCompiler(name string) (Compiler, error) {
 		return nil, fmt.Errorf("toolchain: missing compiler %q, forgotten import?", name)
 	}
 
-	compiler, err := initializeCompiler(name, constructor)
+	compiler, err := constructor(name)
 	if err != nil {
 		return nil, fmt.Errorf("toolchain: failed to initialize compiler %q: %w", name, err)
 	}
@@ -126,7 +125,7 @@ func DetectCompilers() []Compiler {
 	var found []Compiler
 
 	for _, name := range compilersNames {
-		compiler, err := initializeCompiler(name, compilers[name])
+		compiler, err := compilers[name](name)
 		if err != nil {
 			continue
 		}
@@ -137,23 +136,9 @@ func DetectCompilers() []Compiler {
 	return found
 }
 
-func initializeCompiler(name string, constructor CompilerConstructor) (Compiler, error) {
-	path, err := exec.LookPath(name)
-	if err != nil {
-		return nil, err
-	}
-
-	compiler, err := constructor(path)
-	if err != nil {
-		return nil, err
-	}
-
-	return compiler, nil
-}
-
-// CompilerConstructor is a function that returns a Compiler which is ran
-// using the executable at the provided path.
-type CompilerConstructor func(path string) (Compiler, error)
+// CompilerConstructor is a function that returns a Compiler.
+// It takes either a path to the executable or the executable's name as an argument.
+type CompilerConstructor func(pathOrExecutableName string) (Compiler, error)
 
 var (
 	compilers      = map[string]CompilerConstructor{}
@@ -166,7 +151,7 @@ var (
 // constructor is nil, this function panics. If the name has path separators
 // or path list separators, this function panics.
 //
-// The provided name is used to look up the path of the compiler's executable.
+// The provided name may be used by the constructor to look up the path of the compiler's executable.
 func RegisterCompiler(name string, constructor CompilerConstructor) {
 	compilersMutex.Lock()
 	defer compilersMutex.Unlock()
