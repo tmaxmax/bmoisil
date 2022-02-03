@@ -5,3 +5,12 @@ usage under convenient interfaces so tools can be interchangeably
 utilized.
 */
 package toolchain
+
+import (
+	"os"
+	"strings"
+)
+
+func isValidImplementationName(name string) bool {
+	return !strings.ContainsAny(name, string([]rune{os.PathSeparator, os.PathListSeparator}))
+}
