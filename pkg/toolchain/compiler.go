@@ -192,7 +192,7 @@ func RegisterCompiler(name string, constructor CompilerConstructor) {
 	compilersMutex.Lock()
 	defer compilersMutex.Unlock()
 
-	if strings.ContainsAny(name, string([]rune{os.PathSeparator, os.PathListSeparator})) {
+	if !isValidImplementationName(name) {
 		panic(fmt.Sprintf("toolchain: compiler name %q has invalid characters", name))
 	}
 
