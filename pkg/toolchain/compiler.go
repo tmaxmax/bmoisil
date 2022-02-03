@@ -12,9 +12,9 @@ import (
 // A Compiler can compile one C/C++ source to an executable.
 type Compiler interface {
 	// Compile compiles the given input using a C++ compiler to an executable.
-	// It parses the given options to the format required by the underlying compiler kind (ex. GCC, Clang, MSVC)
-	// and then outputs the compiled source file as an executable, which is written byte by byte to the
-	// provided writer. The compile options may be nil.
+	// It parses the given options to the format required by the underlying compiler
+	// and then outputs the compiled source file as an executable,
+	// which is written to the provided writer. The compile options may be nil.
 	Compile(ctx context.Context, input io.Reader, output io.Writer, options *CompileOptions) error
 	// Info returns some information about the compiler.
 	Info() CompilerInfo
@@ -43,6 +43,10 @@ type CompileOptions struct {
 	// in CompileOptions. These flags are not translated, so compilers may not be
 	// able to be used interchangeably when this option is used. They also override
 	// any flags set by the fields from CompileOptions.
+	//
+	// Flag names may or may not start with dashes ('-') or slashes ('/'), as the correct
+	// starting character will be used anyway.
+	// Multiple values for a flag are expanded, for example, as "-flag value1 -flag value2".
 	Flags map[string][]string
 }
 
