@@ -104,7 +104,10 @@ type CompilerInfo struct {
 // NewCompiler looks up the compiler's executable with the given name on the host and initializes
 // a Compiler instance that uses that executable.
 func NewCompiler(name string) (Compiler, error) {
+	compilersMutex.RLock()
 	constructor := compilers[name]
+	compilersMutex.RUnlock()
+
 	if constructor == nil {
 		return nil, fmt.Errorf("toolchain: missing compiler %q, forgotten import?", name)
 	}
@@ -119,9 +122,13 @@ func NewCompiler(name string) (Compiler, error) {
 
 // DetectCompilers returns all the compiler toolchains supported by this package available on the host system.
 func DetectCompilers() []Compiler {
-	compilersMutex.Lock()
-	defer compilersMutex.Unlock()
+	compilersMutex.RLock()
+	defer compilersMutex.RUnlock()
 
+	return detectCompilers()
+}
+
+func detectCompilers() []Compiler {
 	var found []Compiler
 
 	for _, name := range compilersNames {
@@ -136,6 +143,35 @@ func DetectCompilers() []Compiler {
 	return found
 }
 
+// UsePreferredCompiler tries to initialize the compiler specified by the CXX environment variable.
+// If CXX is empty, it falls back to the first value returned by DetectCompilers. If no compiler
+// was detected, it returns an error.
+func UsePreferredCompiler() (Compiler, error) {
+	compilersMutex.RLock()
+	defer compilersMutex.RUnlock()
+
+	name := os.Getenv("CXX")
+	if name != "" {
+		for _, registeredName := range compilersNames {
+			if strings.Contains(name, registeredName) {
+				compiler, err := compilers[registeredName](name)
+				if err != nil {
+					break
+				}
+
+				return compiler, nil
+			}
+		}
+	}
+
+	compilers := detectCompilers()
+	if len(compilers) == 0 {
+		return nil, fmt.Errorf("toolchain: no compilers registered, forgotten imports?")
+	}
+
+	return compilers[0], nil
+}
+
 // CompilerConstructor is a function that returns a Compiler.
 // It takes either a path to the executable or the executable's name as an argument.
 type CompilerConstructor func(pathOrExecutableName string) (Compiler, error)
@@ -143,7 +179,7 @@ type CompilerConstructor func(pathOrExecutableName string) (Compiler, error)
 var (
 	compilers      = map[string]CompilerConstructor{}
 	compilersNames []string // provide ordered iteration for the map
-	compilersMutex sync.Mutex
+	compilersMutex sync.RWMutex
 )
 
 // RegisterCompiler adds a custom Compiler implementation for usage.
