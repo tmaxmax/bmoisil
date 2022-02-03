@@ -93,7 +93,7 @@ type CompilerInfo struct {
 	Name string
 	// Path of the compiler's executable.
 	Path string
-	// Version of the compiler (as outputted by GCC's -dumpversion, for example).
+	// Version number of the compiler.
 	Version string
 	// RecommendedDebugger to be used with executables outputted by this compiler.
 	// If non-empty, the name can be used to instantiate a Debugger instance, if
@@ -101,8 +101,8 @@ type CompilerInfo struct {
 	RecommendedDebugger string
 }
 
-// NewCompiler looks up the compiler's executable with the given name on the host and initializes
-// a Compiler instance that uses that executable.
+// NewCompiler looks up the compiler's executable with the given name on the host
+// and initializes a Compiler instance that uses that executable.
 func NewCompiler(name string) (Compiler, error) {
 	compilersMutex.RLock()
 	constructor := compilers[name]
@@ -120,7 +120,7 @@ func NewCompiler(name string) (Compiler, error) {
 	return compiler, nil
 }
 
-// DetectCompilers returns all the compiler toolchains supported by this package available on the host system.
+// DetectCompilers returns all the supported (imported) compiler toolchains available on the host system.
 func DetectCompilers() []Compiler {
 	compilersMutex.RLock()
 	defer compilersMutex.RUnlock()
@@ -172,7 +172,7 @@ func UsePreferredCompiler() (Compiler, error) {
 	return compilers[0], nil
 }
 
-// CompilerConstructor is a function that returns a Compiler.
+// CompilerConstructor is a function that constructs a Compiler from an executable.
 // It takes either a path to the executable or the executable's name as an argument.
 type CompilerConstructor func(pathOrExecutableName string) (Compiler, error)
 
