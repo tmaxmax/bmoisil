@@ -14,3 +14,57 @@ import (
 func isValidImplementationName(name string) bool {
 	return !strings.ContainsAny(name, string([]rune{os.PathSeparator, os.PathListSeparator}))
 }
+
+// Flags is a utility type used to manage command-line flags for executables.
+type Flags map[string][]string
+
+// Add adds a value to the specified flag.
+func (f Flags) Add(flag, value string) {
+	key := normalizeFlagName(flag)
+	f[key] = append(f[key], value)
+}
+
+// Set sets the values for the specified flag, overriding any previous values.
+// If the flag has no values, Set only toggles it on.
+func (f Flags) Set(flag string, values ...string) {
+	key := normalizeFlagName(flag)
+	f[key] = append([]string(nil), values...)
+}
+
+// Del deletes or untoggles a flag.
+func (f Flags) Del(flag string) {
+	delete(f, normalizeFlagName(flag))
+}
+
+// Has checks whether the flag has values or is toggled.
+func (f Flags) Has(flag string) bool {
+	_, ok := f[normalizeFlagName(flag)]
+	return ok
+}
+
+// Get the first set value of the flags. Returns the empty string if no values are set.
+func (f Flags) Get(flag string) string {
+	values := f.GetAll(flag)
+	if len(values) == 0 {
+		return ""
+	}
+
+	return values[0]
+}
+
+// GetAll returns all the values for the given flag.
+func (f Flags) GetAll(flag string) []string {
+	return f[normalizeFlagName(flag)]
+}
+
+func normalizeFlagName(name string) string {
+	if len(name) == 0 {
+		panic("toolchain: empty flag name")
+	}
+
+	if name[0] == '/' || name[0] == '-' {
+		return name[1:]
+	}
+
+	return name
+}

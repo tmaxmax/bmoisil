@@ -43,11 +43,7 @@ type CompileOptions struct {
 	// in CompileOptions. These flags are not translated, so compilers may not be
 	// able to be used interchangeably when this option is used. They also override
 	// any flags set by the fields from CompileOptions.
-	//
-	// Flag names may or may not start with dashes ('-') or slashes ('/'), as the correct
-	// starting character will be used anyway.
-	// Multiple values for a flag are expanded, for example, as "-flag value1 -flag value2".
-	Flags map[string][]string
+	Flags Flags
 }
 
 // CompileOptimizationLevel values are used to specify the optimization level used by the compiler.
