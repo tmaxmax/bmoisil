@@ -25,15 +25,25 @@ func (f Flags) Add(flag, value string) {
 }
 
 // Set sets the values for the specified flag, overriding any previous values.
-// If the flag has no values, Set only toggles it on.
+// If no values are given, the flag isn't set.
 func (f Flags) Set(flag string, values ...string) {
+	if len(values) == 0 {
+		return
+	}
+
 	key := normalizeFlagName(flag)
 	f[key] = append([]string(nil), values...)
 }
 
-// Del deletes or untoggles a flag.
-func (f Flags) Del(flag string) {
+// Delete deletes or untoggles a flag.
+func (f Flags) Delete(flag string) {
 	delete(f, normalizeFlagName(flag))
+}
+
+// Toggle turns a flag on, without setting any values for it.
+// Untoggle it using Del.
+func (f Flags) Toggle(flag string) {
+	f[normalizeFlagName(flag)] = nil
 }
 
 // Has checks whether the flag has values or is toggled.
