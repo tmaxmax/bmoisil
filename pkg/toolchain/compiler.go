@@ -35,6 +35,8 @@ type CompileOptions struct {
 	LanguageStandard CompileLanguageStandard
 	// OptimizationLevel specifies the level of optimization applied to the executable.
 	OptimizationLevel CompileOptimizationLevel
+	// SourceFileKind indicates whether the source is C or C++. Defaults to C++.
+	SourceFileKind SourceFileKind
 	// Defines specifies a list of macros that should be defined.
 	Defines []string
 	// Undefs specifies a list of macros that should be undefined.
@@ -85,6 +87,14 @@ const (
 	CompileLanguageStandardCPP14
 	CompileLanguageStandardCPP17
 	CompileLanguageStandardCPP20
+)
+
+// SourceFileKind indicates whether the compiled source is C or C++.
+type SourceFileKind int
+
+const (
+	SourceFileKindCPP SourceFileKind = iota
+	SourceFileKindC
 )
 
 // CompilerInfo holds some information about the underlying compiler.
