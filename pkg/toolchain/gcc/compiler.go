@@ -103,14 +103,17 @@ func parseFlags(flags toolchain.Flags) []string {
 	return out
 }
 
+// Compiler is an instance of a g++ compiler.
 type Compiler struct {
 	info toolchain.CompilerInfo
 }
 
 var _ toolchain.Compiler = (*Compiler)(nil)
 
-func NewCompiler(pathOrExec string) (*Compiler, error) {
-	cmd := execCommandContext(context.Background(), pathOrExec, "-dumpversion")
+// NewCompiler initializes a g++ compiler. It looks up an executable using the provided name
+// or uses the executable at the given path, if a path is specified.
+func NewCompiler(nameOrPath string) (*Compiler, error) {
+	cmd := execCommandContext(context.Background(), nameOrPath, "-dumpversion")
 	version, err := cmd.Output()
 	if err != nil {
 		return nil, fmt.Errorf("gcc: failed to initialize compiler: %w", err)
