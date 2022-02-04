@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 	"strings"
 	"sync"
 )
@@ -216,4 +217,17 @@ func RegisterCompiler(name string, constructor CompilerConstructor) {
 
 	compilers[name] = constructor
 	compilersNames = append(compilersNames, name)
+}
+
+// GetSourceFileKind tries to determine the source kind the path points to based on its extension.
+// If it has an unknown extension it returns an error.
+func GetSourceFileKind(path string) (SourceFileKind, error) {
+	switch ext := filepath.Ext(path); ext {
+	case "c":
+		return SourceFileKindC, nil
+	case "cpp", "cxx", "cc", "C", "c++", "cp":
+		return SourceFileKindCPP, nil
+	default:
+		return -1, fmt.Errorf("toolchain: unknown source file extension %q for file %q", ext, path)
+	}
 }
