@@ -13,9 +13,9 @@ import (
 type Compiler interface {
 	// Compile compiles the given input using a C++ compiler to an executable.
 	// It parses the given options to the format required by the underlying compiler
-	// and then outputs the compiled source file as an executable,
-	// which is written to the provided writer. The compile options may be nil.
-	Compile(ctx context.Context, input io.Reader, output io.Writer, options *CompileOptions) error
+	// and then outputs the compiled source file as an executable at the given path.
+	// The compile options may be nil.
+	Compile(ctx context.Context, input io.Reader, outputPath string, options *CompileOptions) error
 	// Info returns some information about the compiler.
 	Info() CompilerInfo
 }
