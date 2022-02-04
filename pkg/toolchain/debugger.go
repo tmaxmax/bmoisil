@@ -9,7 +9,7 @@ import (
 // A Debugger is used to debug compiled executables.
 type Debugger interface {
 	// Debug runs the debugger for the given executable.
-	Debug(ctx context.Context, executablePath string) error
+	Debug(ctx context.Context, executablePath string) error // TODO: Pass STDIN, STDOUT and STDERR as parameters?
 	// Info returns some information about the debugger.
 	Info() DebuggerInfo
 }
