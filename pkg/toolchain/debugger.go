@@ -3,15 +3,47 @@ package toolchain
 import (
 	"context"
 	"fmt"
+	"io"
+	"os"
 	"sync"
 )
 
 // A Debugger is used to debug compiled executables.
 type Debugger interface {
 	// Debug runs the debugger for the given executable.
-	Debug(ctx context.Context, executablePath string) error // TODO: Pass STDIN, STDOUT and STDERR as parameters?
+	Debug(ctx context.Context, executablePath string, io *DebuggerStreams) error // TODO: Pass STDIN, STDOUT and STDERR as parameters?
 	// Info returns some information about the debugger.
 	Info() DebuggerInfo
+}
+
+// DebuggerStreams holds the IO streams used by the debugger.
+// If not specified, they default to the standard OS streams.
+type DebuggerStreams struct {
+	Stdin          io.Reader
+	Stdout, Stderr io.Writer
+}
+
+// GetDebuggerStreams is an utility that returns the IO streams to be used for executing commands.
+// It replaces unset streams with the system's standard ones.
+func GetDebuggerStreams(streams *DebuggerStreams) (stdin io.Reader, stdout io.Writer, stderr io.Writer) {
+	stdin = os.Stdin
+	stdout = os.Stdout
+	stderr = os.Stderr
+
+	if streams == nil {
+		return
+	}
+	if streams.Stdin != nil {
+		stdin = streams.Stdin
+	}
+	if streams.Stdout != nil {
+		stdout = streams.Stdout
+	}
+	if streams.Stderr != nil {
+		stderr = streams.Stderr
+	}
+
+	return
 }
 
 // DebuggerInfo holds some information about the underlying debugger.
