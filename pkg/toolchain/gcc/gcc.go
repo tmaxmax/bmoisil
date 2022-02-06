@@ -23,4 +23,7 @@ func init() {
 	toolchain.RegisterCompiler(compilerName, func(pathOrExecutableName string) (toolchain.Compiler, error) {
 		return NewCompiler(pathOrExecutableName)
 	})
+	toolchain.RegisterDebugger(debuggerName, func(pathOrExecutableName string) (toolchain.Debugger, error) {
+		return NewDebugger(pathOrExecutableName)
+	})
 }
