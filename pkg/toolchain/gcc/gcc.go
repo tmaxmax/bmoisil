@@ -20,7 +20,7 @@ const (
 var execCommandContext = exec.CommandContext
 
 func init() {
-	toolchain.RegisterCompiler("g++", func(pathOrExecutableName string) (toolchain.Compiler, error) {
+	toolchain.RegisterCompiler(compilerName, func(pathOrExecutableName string) (toolchain.Compiler, error) {
 		return NewCompiler(pathOrExecutableName)
 	})
 }
