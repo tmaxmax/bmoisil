@@ -12,11 +12,8 @@ import (
 	"path"
 	"strconv"
 	"strings"
-	"sync/atomic"
 	"testing"
 	"time"
-
-	"github.com/gocolly/colly/v2/debug"
 )
 
 //go:embed testdata/*
@@ -138,31 +135,6 @@ func newTestTransport(base string, rt http.RoundTripper) http.RoundTripper {
 		panic(err)
 	}
 	return &transport{baseURL, rt}
-}
-
-type testDebugger struct {
-	tb      testing.TB
-	start   time.Time
-	counter int32
-}
-
-func newTestDebugger(tb testing.TB) *testDebugger {
-	tb.Helper()
-
-	return &testDebugger{tb: tb}
-}
-
-var _ debug.Debugger = (*testDebugger)(nil)
-
-func (t *testDebugger) Init() error {
-	t.counter = 0
-	t.start = time.Now()
-	return nil
-}
-
-func (t *testDebugger) Event(e *debug.Event) {
-	i := atomic.AddInt32(&t.counter, 1)
-	t.tb.Logf("[%06d] %d [%06d - %s] %q	(%s)", i, e.CollectorID, e.RequestID, e.Type, e.Values, time.Since(t.start))
 }
 
 func timeoutContext(timeout time.Duration) (context.Context, context.CancelFunc) {

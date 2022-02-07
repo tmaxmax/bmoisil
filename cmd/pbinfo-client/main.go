@@ -12,7 +12,6 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/gocolly/colly/v2/debug"
 	"github.com/tmaxmax/bmoisil/pkg/pbinfo"
 	"golang.org/x/sync/errgroup"
 )
@@ -24,14 +23,14 @@ func main() {
 }
 
 func run() error {
-	var id int
-	var showTestCases bool
-	var useDebugger bool
-	var sizeLimit int
+	var (
+		id            int
+		showTestCases bool
+		sizeLimit     int
+	)
 
 	flag.IntVar(&id, "id", 0, "The ID of the PbInfo problem to retrieve")
 	flag.BoolVar(&showTestCases, "show-test-cases", false, "Whether to output the test cases or not")
-	flag.BoolVar(&useDebugger, "debug", false, "Use a debugger for the web scraper")
 	flag.IntVar(&sizeLimit, "size-limit", 1e3, "The maximum test case content size to show")
 	flag.Parse()
 
@@ -39,10 +38,6 @@ func run() error {
 	defer cancel()
 
 	client := &pbinfo.Client{}
-	if useDebugger {
-		client.CollectorDebugger = &debug.LogDebugger{}
-	}
-
 	g, gctx := errgroup.WithContext(ctx)
 
 	var testCases []pbinfo.TestCase

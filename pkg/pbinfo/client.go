@@ -10,10 +10,10 @@ import (
 	"sync"
 	"time"
 
+	"github.com/andybalholm/cascadia"
 	"github.com/docker/go-units"
-	"github.com/gocolly/colly/v2"
-	"github.com/gocolly/colly/v2/debug"
-	"github.com/gocolly/colly/v2/extensions"
+	"github.com/tmaxmax/bmoisil/pkg/traverse"
+	"golang.org/x/net/html"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -24,81 +24,85 @@ const (
 )
 
 // The Client is used to retrieve data from the PbInfo platform.
-// It is comprised of a Colly collector, for scraping HTML pages, and an HTTP client
-// for downloading files/fetching endpoints that do not return HTML.
 type Client struct {
-	// CollectorCacheDir specifies a location where GET requests the scraper makes
-	// are cached as files. Caching is disabled if not provided.
-	CollectorCacheDir string
-	// CollectorDebugger is an optional debugger implementation used by the scraper.
-	CollectorDebugger debug.Debugger
-	// RoundTripper is, if defined, a custom roundtripper used by the scraper and the HTTP client.
-	RoundTripper http.RoundTripper
-	// Timeout is the request timeout for both the scraper and the HTTP client.
-	// Defaults to no timeout.
-	Timeout time.Duration
-
-	collector     *colly.Collector
-	collectorInit sync.Once
-
-	client     *http.Client
+	// The HTTP client to use. Defaults to http.DefaultClient.
+	Client     *http.Client
 	clientInit sync.Once
 }
 
-func (c *Client) getCollector(ctx context.Context) *colly.Collector {
-	c.collectorInit.Do(func() {
-		col := colly.NewCollector()
-		col.AllowedDomains = []string{domain, "www." + domain}
-		col.CacheDir = c.CollectorCacheDir
-		col.AllowURLRevisit = true
-		if c.CollectorDebugger != nil {
-			col.SetDebugger(c.CollectorDebugger)
-		}
-		col.WithTransport(c.RoundTripper)
-		col.SetRequestTimeout(c.Timeout)
-		extensions.RandomUserAgent(col)
-
-		c.collector = col
-	})
-
-	col := c.collector.Clone()
-	col.Context = ctx
-	return col
-}
-
-func (c *Client) getClient() *http.Client {
+func (c *Client) request(req *http.Request) (*http.Response, error) {
 	c.clientInit.Do(func() {
-		if c.client == nil {
-			c.client = &http.Client{}
-		}
-
-		if c.client.Transport == nil {
-			c.client.Transport = c.RoundTripper
+		if c.Client == nil {
+			c.Client = http.DefaultClient
 		}
 	})
 
-	return c.client
+	res, err := c.Client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("failed to do request to %q: %w", req.URL, err)
+	}
+	if res.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("error response from %q: %d %s", req.URL, res.StatusCode, http.StatusText(res.StatusCode))
+	}
+
+	return res, nil
 }
+
+func (c *Client) requestHTML(ctx context.Context, url string) (*html.Node, error) {
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("failed to instantiate request to %q: %w", url, err)
+	}
+
+	res, err := c.request(req)
+	if err != nil {
+		return nil, err
+	}
+	defer res.Body.Close()
+
+	root, err := html.Parse(res.Body)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse response body for %q: %w", req.URL, err)
+	}
+
+	return root, nil
+}
+
+var (
+	selectorProblemMetadataTable  = cascadia.MustCompile(`a[name="section-restrictii"] + table`)
+	selectorProblemMetadataColumn = cascadia.MustCompile(`tbody > tr > td`)
+	selectorProblemTitle          = cascadia.MustCompile(`h1.text-primary > a`)
+)
 
 // FindProblemByID returns the information associated with the problem identified by the given ID.
 // It returns an error if the problem does not exist, a network error occurs etc.
 func (c *Client) FindProblemByID(ctx context.Context, id int) (*Problem, error) {
-	col := c.getCollector(ctx)
-	p := &Problem{ID: id}
-
-	col.OnHTML(`a[name="section-restrictii"] + table`, func(h *colly.HTMLElement) {
-		h.ForEach(`tbody > tr > td`, func(i int, h *colly.HTMLElement) {
-			parsers[i](h, p)
-		})
-	})
-
-	col.OnHTML(`h1.text-primary > a`, func(h *colly.HTMLElement) {
-		p.Name = strings.TrimSpace(h.Text)
-	})
-
-	if err := col.Visit(fmt.Sprintf("%s/probleme/%d", baseEndpoint, id)); err != nil {
-		return nil, fmt.Errorf("failed to find problem with ID %d: %w", id, err)
+	root, err := c.requestHTML(ctx, fmt.Sprintf("%s/probleme/%d", baseEndpoint, id))
+	if err != nil {
+		return nil, fmt.Errorf("pbinfo: %w", err)
 	}
+
+	table := selectorProblemMetadataTable.MatchFirst(root)
+	if table == nil {
+		return nil, fmt.Errorf("pbinfo: FindProblemByID failed to find info table for problem %d: HTML changed?", id)
+	}
+
+	columns := selectorProblemMetadataColumn.MatchAll(table)
+	if l := len(columns); l < 8 || l > 9 {
+		return nil, fmt.Errorf("pbinfo: FindProblemByID failed to find info columns for problem %d: HTML changed?", id)
+	}
+
+	p := &Problem{ID: id}
+	for i, col := range columns {
+		parsers[i](col, p)
+	}
+
+	title := selectorProblemTitle.MatchFirst(root)
+	if title == nil {
+		return nil, fmt.Errorf("pbinfo: FindProblemByID failed to find title for problem %d: HTML changed?", id)
+	}
+
+	p.Name = text(title)
 
 	return p, nil
 }
@@ -111,18 +115,33 @@ func (c *Client) GetProblemTestCases(ctx context.Context, problemID int) ([]Test
 	cases, err := c.getProblemFullTestCases(ctx, problemID)
 	// If an error is returned, getProblemExampleTestCases will probably fail too (e.g. network error).
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("pbinfo: %w", err)
 	}
 	if len(cases) != 0 {
 		return cases, nil
 	}
 
 	// Try to retrieve examples if no test cases were found.
-	return c.getProblemExampleTestCases(ctx, problemID)
+	cases, err = c.getProblemExampleTestCases(ctx, problemID)
+	if err != nil {
+		return nil, fmt.Errorf("pbinfo: %w", err)
+	}
+
+	return cases, nil
 }
 
+var (
+	selectorTestCasesTableRows = cascadia.MustCompile(`table > tbody > tr`)
+	selectorTableColumn        = cascadia.MustCompile(`td`)
+	selectorTextArea           = cascadia.MustCompile(`textarea`)
+	selectorAnchor             = cascadia.MustCompile(`a`)
+)
+
 func (c *Client) getProblemFullTestCases(ctx context.Context, problemID int) ([]TestCase, error) {
-	col := c.getCollector(ctx)
+	root, err := c.requestHTML(ctx, fmt.Sprintf("%s/ajx-problema-afisare-teste.php?id=%d", ajaxEndpoint, problemID))
+	if err != nil {
+		return nil, err
+	}
 
 	type url struct {
 		index int
@@ -135,34 +154,30 @@ func (c *Client) getProblemFullTestCases(ctx context.Context, problemID int) ([]
 		urls      []url
 	)
 
-	col.OnHTML(`table > tbody > tr`, func(h *colly.HTMLElement) {
+	for _, row := range selectorTestCasesTableRows.MatchAll(root) {
 		testCases = append(testCases, TestCase{})
 		index := len(testCases) - 1
 		t := &testCases[index]
 
-		h.ForEach(`td`, func(i int, h *colly.HTMLElement) {
+		for i, col := range selectorTableColumn.MatchAll(row) {
 			switch i {
 			case 1:
-				t.Score, _ = strconv.Atoi(normalizeText(h.Text))
+				t.Score, _ = strconv.Atoi(text(col))
 			case 2, 3:
-				content := h.ChildText(`textarea`)
+				content := childText(col, selectorTextArea)
 				if content == "" {
-					urls = append(urls, url{index, h.ChildAttr(`a`, `href`), i == 2})
+					urls = append(urls, url{index, childAttr(col, selectorAnchor, `href`), i == 2})
 				} else if i == 2 {
 					t.Input = []byte(content)
 				} else {
 					t.Output = []byte(content)
 				}
 			case 4:
-				if normalizeText(h.Text) == "da" {
+				if dashToEmpty(text(col)) == "da" {
 					t.IsExample = true
 				}
 			}
-		})
-	})
-
-	if err := col.Visit(fmt.Sprintf("%s/ajx-problema-afisare-teste.php?id=%d", ajaxEndpoint, problemID)); err != nil {
-		return nil, fmt.Errorf("failed to retrieve test cases for problem with ID %d: %w", problemID, err)
+		}
 	}
 
 	if len(testCases) == 0 {
@@ -171,7 +186,6 @@ func (c *Client) getProblemFullTestCases(ctx context.Context, problemID int) ([]
 		return nil, nil
 	}
 
-	hc := c.getClient()
 	g, gctx := errgroup.WithContext(ctx)
 
 	for i := range urls {
@@ -188,15 +202,11 @@ func (c *Client) getProblemFullTestCases(ctx context.Context, problemID int) ([]
 			caseType := q.Get("tip")
 			caseID := q.Get("id")
 
-			res, err := hc.Do(req)
+			res, err := c.request(req)
 			if err != nil {
 				return fmt.Errorf("request failed for %s (%s): %w", caseID, caseType, err)
 			}
 			defer res.Body.Close()
-
-			if res.StatusCode != http.StatusOK {
-				return fmt.Errorf("request failed for %s (%s): %s", caseID, caseType, http.StatusText(res.StatusCode))
-			}
 
 			data, err := io.ReadAll(res.Body)
 			if err != nil {
@@ -226,17 +236,18 @@ func (c *Client) getProblemFullTestCases(ctx context.Context, problemID int) ([]
 	return testCases, nil
 }
 
+var selectorExamples = cascadia.MustCompile(`p + pre`)
+
 func (c *Client) getProblemExampleTestCases(ctx context.Context, problemID int) ([]TestCase, error) {
-	col := c.getCollector(ctx)
+	root, err := c.requestHTML(ctx, fmt.Sprintf("%s/probleme/%d", baseEndpoint, problemID))
+	if err != nil {
+		return nil, err
+	}
 
 	var examplesContent []string
 
-	col.OnHTML(`p + pre`, func(h *colly.HTMLElement) {
-		examplesContent = append(examplesContent, h.Text)
-	})
-
-	if err := col.Visit(fmt.Sprintf("%s/probleme/%d", baseEndpoint, problemID)); err != nil {
-		return nil, fmt.Errorf("failed to retrieve examples for problem with ID %d: %w", problemID, err)
+	for _, example := range selectorExamples.MatchAll(root) {
+		examplesContent = append(examplesContent, text(example))
 	}
 
 	if len(examplesContent)%2 != 0 {
@@ -254,6 +265,59 @@ func (c *Client) getProblemExampleTestCases(ctx context.Context, problemID int) 
 	return testCases, nil
 }
 
+var (
+	selectorSpan           = cascadia.MustCompile(`span`)
+	selectorTotalMemory    = cascadia.MustCompile(`span[title="Memorie totală"]`)
+	selectorStackDimension = cascadia.MustCompile(`span[title="Dimensiunea stivei"]`)
+)
+
+func dashToEmpty(text string) string {
+	if text == "-" {
+		return ""
+	}
+	return text
+}
+
+func text(n *html.Node) string {
+	sb := strings.Builder{}
+
+	traverse.Depth(n, func(n *html.Node) bool {
+		if n.Type != html.TextNode {
+			if text := strings.TrimSpace(n.Data); text != "" {
+				_, _ = sb.WriteString(text)
+			}
+		}
+
+		return true
+	})
+
+	return sb.String()
+}
+
+func childText(n *html.Node, childSelector cascadia.Selector) string {
+	child := childSelector.MatchFirst(n)
+	if child == nil {
+		return ""
+	}
+
+	return text(child)
+}
+
+func childAttr(n *html.Node, childSelector cascadia.Selector, attr string) string {
+	child := childSelector.MatchFirst(n)
+	if child == nil {
+		return ""
+	}
+
+	for _, a := range child.Attr {
+		if a.Key == attr {
+			return a.Val
+		}
+	}
+
+	return ""
+}
+
 func parseMemoryLimit(input string, output *int64) {
 	mem, err := units.FromHumanSize(input)
 	if err == nil {
@@ -261,18 +325,18 @@ func parseMemoryLimit(input string, output *int64) {
 	}
 }
 
-var parsers = [...]func(*colly.HTMLElement, *Problem){
+var parsers = [...]func(*html.Node, *Problem){
 	// publisher
-	0: func(h *colly.HTMLElement, p *Problem) {
-		p.Publisher = h.ChildText(`span`)
+	0: func(n *html.Node, p *Problem) {
+		p.Publisher = childText(n, selectorSpan)
 	},
 	// grade
-	1: func(h *colly.HTMLElement, p *Problem) {
-		p.Grade, _ = strconv.Atoi(normalizeText(h.Text))
+	1: func(n *html.Node, p *Problem) {
+		p.Grade, _ = strconv.Atoi(dashToEmpty(text(n)))
 	},
 	// input / output
-	2: func(h *colly.HTMLElement, p *Problem) {
-		inout := strings.Split(h.ChildText(`span`), "/")
+	2: func(n *html.Node, p *Problem) {
+		inout := strings.Split(childText(n, selectorSpan), "/")
 		if len(inout) != 2 {
 			p.Input = "-"
 			return
@@ -290,8 +354,8 @@ var parsers = [...]func(*colly.HTMLElement, *Problem){
 		p.Output = out
 	},
 	// time limit
-	3: func(h *colly.HTMLElement, p *Problem) {
-		split := strings.Split(normalizeText(h.Text), " ")
+	3: func(n *html.Node, p *Problem) {
+		split := strings.Split(dashToEmpty(text(n)), " ")
 		if len(split) < 1 {
 			return
 		}
@@ -305,48 +369,40 @@ var parsers = [...]func(*colly.HTMLElement, *Problem){
 		p.MaxTime = time.Duration(rawTime * float64(time.Second))
 	},
 	// memory limits
-	4: func(h *colly.HTMLElement, p *Problem) {
-		parseMemoryLimit(h.ChildText(`span[title="Memorie totală"]`), &p.MaxMemoryBytes)
-		parseMemoryLimit(h.ChildText(`span[title="Dimensiunea stivei"]`), &p.MaxStackBytes)
+	4: func(n *html.Node, p *Problem) {
+		parseMemoryLimit(childText(n, selectorTotalMemory), &p.MaxMemoryBytes)
+		parseMemoryLimit(childText(n, selectorStackDimension), &p.MaxStackBytes)
 	},
 	// problem source
-	5: func(h *colly.HTMLElement, p *Problem) {
-		if text := normalizeText(h.Text); text != "" {
-			p.Source = text
+	5: func(n *html.Node, p *Problem) {
+		if t := dashToEmpty(text(n)); t != "" {
+			p.Source = t
 		}
 	},
 	// authors
-	6: func(h *colly.HTMLElement, p *Problem) {
-		text := normalizeText(h.Text)
-		if text == "" {
+	6: func(n *html.Node, p *Problem) {
+		t := dashToEmpty(text(n))
+		if t == "" {
 			return
 		}
 
-		p.Authors = strings.Split(text, ",")
+		p.Authors = strings.Split(t, ",")
 		for i, a := range p.Authors {
 			p.Authors[i] = strings.TrimSpace(a)
 		}
 	},
 	// difficulty
-	7: func(h *colly.HTMLElement, p *Problem) {
-		p.Difficulty = ParseProblemDifficulty(normalizeText(h.Text))
+	7: func(n *html.Node, p *Problem) {
+		p.Difficulty = ParseProblemDifficulty(dashToEmpty(text(n)))
 	},
 	// score
-	8: func(h *colly.HTMLElement, p *Problem) {
-		text := normalizeText(h.Text)
-		if text == "" {
+	8: func(n *html.Node, p *Problem) {
+		t := dashToEmpty(text(n))
+		if t == "" {
 			return
 		}
 
-		score, _ := strconv.Atoi(text)
+		score, _ := strconv.Atoi(t)
 		p.Score = &score
 	},
-}
-
-func normalizeText(text string) string {
-	text = strings.TrimSpace(text)
-	if text == "-" {
-		return ""
-	}
-	return text
 }

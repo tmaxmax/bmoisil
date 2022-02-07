@@ -13,8 +13,9 @@ func newClient(tb testing.TB, serverURL string) *pbinfo.Client {
 	tb.Helper()
 
 	return &pbinfo.Client{
-		CollectorDebugger: newTestDebugger(tb),
-		RoundTripper:      newTestTransport(serverURL, &http.Transport{}),
+		Client: &http.Client{
+			Transport: newTestTransport(serverURL, &http.Transport{}),
+		},
 	}
 }
 
