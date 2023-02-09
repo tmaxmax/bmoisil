@@ -1,17 +1,18 @@
 module github.com/tmaxmax/bmoisil
 
-go 1.17
+go 1.19
 
 require (
 	github.com/andybalholm/cascadia v1.3.1
-	github.com/docker/go-units v0.4.0
-	github.com/stretchr/testify v1.7.0
-	golang.org/x/net v0.0.0-20220127200216-cd36cc0744dd
-	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
+	github.com/docker/go-units v0.5.0
+	github.com/stretchr/testify v1.8.1
+	golang.org/x/net v0.6.0
+	golang.org/x/sync v0.1.0
 )
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c // indirect
+	github.com/stretchr/objx v0.5.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
