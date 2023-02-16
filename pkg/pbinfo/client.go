@@ -341,8 +341,8 @@ var parsers = [...]func(*html.Node, *Problem){
 			return
 		}
 
-		in := strings.TrimSpace(inout[0])
-		out := strings.TrimSpace(inout[1])
+		in := dashToEmpty(strings.TrimSpace(inout[0]))
+		out := dashToEmpty(strings.TrimSpace(inout[1]))
 
 		if in == "tastatură" {
 			in = ""
