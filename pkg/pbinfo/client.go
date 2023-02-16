@@ -282,7 +282,7 @@ func text(n *html.Node) string {
 	sb := strings.Builder{}
 
 	traverse.Depth(n, func(n *html.Node) bool {
-		if n.Type != html.TextNode {
+		if n.Type == html.TextNode {
 			if text := strings.TrimSpace(n.Data); text != "" {
 				_, _ = sb.WriteString(text)
 			}
@@ -338,16 +338,18 @@ var parsers = [...]func(*html.Node, *Problem){
 	2: func(n *html.Node, p *Problem) {
 		inout := strings.Split(childText(n, selectorSpan), "/")
 		if len(inout) != 2 {
-			p.Input = "-"
 			return
 		}
 
 		in := strings.TrimSpace(inout[0])
 		out := strings.TrimSpace(inout[1])
 
-		if in == "tastatură" || out == "ecran" {
-			p.Input = "-"
-			return
+		if in == "tastatură" {
+			in = ""
+		}
+
+		if out == "ecran" {
+			out = ""
 		}
 
 		p.Input = in
